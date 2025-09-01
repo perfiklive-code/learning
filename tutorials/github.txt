@@ -19,3 +19,14 @@ git push origin main     # відправити на GitHub
 
 git pull origin main # підтягнути зміни
 
+
+Створити основну гілку
+git branch -M main
+
+Перший пуш
+git push -u origin main
+
+Далі для пуша достатньо
+git push
+
+
