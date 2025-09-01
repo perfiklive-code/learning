@@ -29,4 +29,6 @@ git push -u origin main
 Далі для пуша достатньо
 git push
 
+Налаштування щоб по замовчуванню pull було rebase
+git config --global pull.rebase true
 
