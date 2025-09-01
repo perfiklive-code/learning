@@ -1,0 +1,21 @@
+
+Введення даних користувача
+git config --global user.name "Твоє_ім'я"
+git config --global user.email "твій_email@gmail.com"
+
+Копіювання проекту на пристрій
+git clone https://github.com/твій_нік/myproject.git
+cd myproject
+
+
+Щоб не вводити токен кожного разу 
+git config --global credential.helper store
+
+Основні команди
+git status               # перевірка змін
+git add .                # додати всі зміни
+git commit -m "Опис змін"  # зберегти коміт
+git push origin main     # відправити на GitHub
+
+git pull origin main # підтягнути зміни
+

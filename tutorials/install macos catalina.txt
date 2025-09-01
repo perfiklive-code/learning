@@ -1,0 +1,12 @@
+MacOS Catalina
+
+1 Встановив Google Drive
+2 Встановив Chrome
+3 Встановив XCode
+4 Перекинув файли конфігурації .vimrc .tmux.conf .bash_profiles
+5 Встановив vim-plug     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+Прописав у vim :PlugInstall
+6 Встановиви MacPorts 2.8.1
+7 Встановив tmux   sudo port install tmux
+8 Створив фай конфігурації .zshrc і перекинув туди aliases .bash_profiles
