@@ -32,3 +32,8 @@ git push
 Налаштування щоб по замовчуванню pull було rebase
 git config --global pull.rebase true
 
+якщо pull не хоче підтягуватись то видаляємо всю папку і створюємо її зномо
+cd ..
+rm -rf learning
+git clone https://github.com/perfiklive-code/learning.git
+
