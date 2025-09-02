@@ -1,8 +1,38 @@
 
 import random
-import os
+import os # для очищення терміналу
+import readchar # для меню
 
-# Заставка
+menu_items = ["Початок гри", "Налаштування ліміту", "Вийти"]
+
+def print_menu(selected_index):
+    print("\n=== Меню ===")
+    for i, item in enumerate(menu_items):
+        if i == selected_index:
+            print(f"{GREEN}> {item}{RESET}")  # Підсвічений активний пункт
+        else:
+            print(f"  {item}")
+
+def interactive_menu():
+    selected = 0
+    while True:
+        # Очищуємо консоль
+        print("\033c", end="")
+        print_menu(selected)
+
+        # Читаємо натиснуту клавішу
+        key = readchar.readkey()
+
+        if key == readchar.key.UP:
+            selected = (selected - 1) % len(menu_items)
+        elif key == readchar.key.DOWN:
+            selected = (selected + 1) % len(menu_items)
+        elif key == readchar.key.ENTER:
+            print("\033c", end="")  # Очищаємо консоль перед дією
+            break
+    return selected
+
+    # Заставка
 def print_banner():
 
     banner_ascii = r"""
@@ -52,14 +82,17 @@ class Limits:
 
 # Кольори
 DARK_GREEN = "\033[32m" # темно зелений
-TURQUOISE = "\033[36m"    #бірюзовий
-RESET = "\033[0m"                 # сірий
+TURQUOISE = "\033[36m"    # бірюзовий
+GREEN = "\033[92m"      # Зелений
+RESET = "\033[0m"                 # сірий - стандартний
 
 limit = Limits()
 
 to_close = True
 super_user = False
 win = False
+
+#print(interactive_menu())
 
 while to_close:
     count = 1
@@ -73,6 +106,10 @@ while to_close:
         win = False
 
     while True:
+        if interactive_menu() == 1:
+            limit.manual()
+
+
         print(f'Спроба: {count}')
         user_value = input(f'Введіть число від {limit.low} до {limit.high}  \n')
 
