@@ -6,7 +6,7 @@ import readchar # для меню
 menu_items = ["Початок гри", "Налаштування ліміту", "Вийти"]
 
 def print_menu(selected_index):
-    print("\n=== Меню ===")
+    print_banner()
     for i, item in enumerate(menu_items):
         if i == selected_index:
             print(f"{GREEN}> {item}{RESET}")  # Підсвічений активний пункт
@@ -44,7 +44,6 @@ def print_banner():
   ╚═════╝  ╚═╝  ╚═══╝
     """
     print(TURQUOISE + banner_ascii + RESET)
-    print('[N] - Вихід     [S] - Суперкористувач\n')
 
 # Очистка консолі
 def clear_console():
@@ -80,23 +79,21 @@ class Limits:
             else:
                 print('Помилка, верхній діапазон повинен бути більшими за нижній!')
 
+    def reset(self):
+        self.low = 1
+        self.high = 100
+
 # Кольори
-DARK_GREEN = "\033[32m" # темно зелений
-TURQUOISE = "\033[36m"    # бірюзовий
-GREEN = "\033[92m"      # Зелений
-RESET = "\033[0m"                 # сірий - стандартний
+DARK_GREEN = "\033[32m"  # темно зелений
+TURQUOISE = "\033[36m"   # бірюзовий
+GREEN = "\033[92m"       # Зелений
+RESET = "\033[0m"        # сірий - стандартний
 
 limit = Limits()
 
-to_close = True
-super_user = False
-win = False
+money = 0
 
-#print(interactive_menu())
-
-while to_close:
-    count = 1
-    debug = False
+while True:
 
     match interactive_menu():
         case 1:
@@ -105,59 +102,58 @@ while to_close:
             print('Гру закінчено!')
             break
 
+    count = 1
+    status = '\nСпробуй свою удачу!\n'
     sicret_value = random.randint(limit.low, limit.high)
-    super_user = False
 
-    if count == 1 and not win:
-        print_banner()
-        win = False
+    clear_console()
 
     while True:
 
+        print_banner()
+        print(f'Ваш баланс: {money}$')
         print(f'Спроба: {count}')
+        print(status)
         user_value = input(f'Введіть число від {limit.low} до {limit.high}  \n')
 
         clear_console()
-        print_banner()
-
 
         match user_value.strip().lower():
-                case 'n':
-                        print('Гру закінчено!')
-                        to_close = False
-                        break
 
-                case 'd':
-                        debug = True
-                        print(DARK_GREEN + f"Відповідь: {sicret_value}\n" + RESET)
-                        continue
+            case 'n':
+                print('Ви здалися!')
+                limit.reset()
+                break
 
-                case 's':
-                        limit.manual()
-                        win = False
-                        break
+            case 'd':
+                debug = True
+                print(DARK_GREEN + f"Відповідь: {sicret_value}\n" + RESET)
+                continue
 
-                case _:
-                        user_value = to_int(user_value)
+            case _ :
+                user_value = to_int(user_value)
+
         match user_value:
+
             case n if n == sicret_value:
                 print(f'Вітаю ви виграли за {count} спроб(и)!!!\n')
-                win = True
+                money += 10
+                limit.reset()
+                input()
                 break
 
             case n if n < sicret_value:
                 if user_value < limit.low:
-                    print('Ви що смієтесь, це навіть менше ніж ліміт!')
-                print('Ви не вгадали, необхідно ввести БІЛЬШЕ значення\n')
+                    status = '\nВи що смієтесь, це навіть менше ніж ліміт!\n'
+                else:
+                    status = '\nВи не вгадали, необхідно ввести БІЛЬШЕ значення\n'
 
             case n if n > sicret_value:
                 if user_value > limit.high:
-                    print('Ви що смієтесь, це навіть більше за ліміт!' )
-                print('Ви не вгадали, необхідно ввести МЕНШЕ значення\n')
-
+                    status = '\nВи що смієтесь, це навіть більше за ліміт!\n'
+                else:
+                    status = '\nВи не вгадали, необхідно ввести МЕНШЕ значення\n'
 
         count += 1
 
         limit.correct(user_value, sicret_value)
-
-
