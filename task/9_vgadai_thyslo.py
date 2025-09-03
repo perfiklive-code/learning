@@ -98,6 +98,13 @@ while to_close:
     count = 1
     debug = False
 
+    match interactive_menu():
+        case 1:
+            limit.manual()
+        case 2:
+            print('Гру закінчено!')
+            break
+
     sicret_value = random.randint(limit.low, limit.high)
     super_user = False
 
@@ -106,9 +113,6 @@ while to_close:
         win = False
 
     while True:
-        if interactive_menu() == 1:
-            limit.manual()
-
 
         print(f'Спроба: {count}')
         user_value = input(f'Введіть число від {limit.low} до {limit.high}  \n')
