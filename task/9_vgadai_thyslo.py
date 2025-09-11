@@ -105,6 +105,7 @@ while True:
     count = 1
     status = '\nСпробуй свою удачу!\n'
     sicret_value = random.randint(limit.low, limit.high)
+    bonus_value = random.randint(limit.low, limit.high)
 
     clear_console()
 
@@ -127,7 +128,7 @@ while True:
 
             case 'd':
                 debug = True
-                print(DARK_GREEN + f"Відповідь: {sicret_value}\n" + RESET)
+                print(DARK_GREEN + f"Відповідь: {sicret_value}\n Бонус: {bonus_value}\n" + RESET)
                 continue
 
             case _ :
